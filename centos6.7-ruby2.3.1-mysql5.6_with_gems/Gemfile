@@ -55,6 +55,7 @@ gem 'whenever', :require => false
 gem 'paperclip', git: 'git://github.com/thoughtbot/paperclip.git'
 gem 'shoryuken'
 gem 'nested_form_fields' # ネストフォームの動的生成
+gem 'redis'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -67,6 +68,15 @@ group :development, :test do
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
+
+  # bulk insert
+  gem 'activerecord-import'
+
+  # テスト系
+  gem 'rspec-rails'
+  gem 'capybara'
+  gem 'guard-rspec'
+  gem 'factory_girl_rails'
 end
 
 group :development do
