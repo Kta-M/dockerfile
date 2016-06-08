@@ -6,7 +6,7 @@ ENV MYSQL_RPM_VERSION mysql-community-release-el6-5.noarch.rpm
 # Install packages for building ruby
 RUN yum -y update
 RUN yum install -y git gcc gcc-c++ make tar wget openssl-devel readline-devel sqlite-devel zlib zlib-devel file | true
-RUN yum install -y libcurl-devel libyaml-devel libffi-devel bzip2 autoconf automake libtool bison libxml2-devel libxslt-devel
+RUN yum install -y libcurl-devel libyaml-devel libffi-devel bzip2 autoconf automake libtool bison libxml2-devel libxslt-devel | true
 RUN yum install -y fontconfig freetype
 
 # Install rbenv and ruby-build
