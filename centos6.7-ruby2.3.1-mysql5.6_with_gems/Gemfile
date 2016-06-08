@@ -1,0 +1,83 @@
+source 'https://rubygems.org'
+
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+gem 'rails', '4.2.6'
+# Use SCSS for stylesheets
+gem 'sass-rails', '~> 5.0'
+# Use Uglifier as compressor for JavaScript assets
+gem 'uglifier', '>= 1.3.0'
+# Use CoffeeScript for .coffee assets and views
+gem 'coffee-rails', '~> 4.1.0'
+# See https://github.com/rails/execjs#readme for more supported runtimes
+gem 'therubyracer', platforms: :ruby
+
+# Use jquery as the JavaScript library
+gem 'jquery-rails'
+# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'jbuilder', '~> 2.0'
+# bundle exec rake doc:rails generates the API under doc/api.
+gem 'sdoc', '~> 0.4.0', group: :doc
+
+# Use ActiveModel has_secure_password
+# gem 'bcrypt', '~> 3.1.7'
+
+# Use Unicorn as the app server
+gem 'unicorn'
+
+# API and Documentation
+gem 'grape', '~> 0.15.0'
+gem 'grape-entity', '~> 0.5.0'
+gem 'grape-swagger'
+gem 'grape-swagger-rails'
+gem 'ruby-swagger'
+
+gem "bower-rails"
+gem 'momentjs-rails'
+
+gem "paranoia", "~> 2.0"
+gem 'paranoia_uniqueness_validator', '1.1.0'
+gem 'kaminari'
+gem 'exception_notification'
+gem 'config' # 設定値定義
+gem 'ransack' # 検索
+gem 'roshi' # validation
+gem 'i18n_generators'
+gem 'uuidtools'
+gem 'seed-fu', '~> 2.3'
+gem 'era_ja' # 和暦表示
+gem 'devise' # 認証
+gem 'aws-sdk', '~>2'
+gem 'annotate' # schema書き出し
+gem 'draper', '~> 1.3' # プレゼンテーション層
+gem 'i18n-recursive-lookup'
+gem 'twilio-ruby'
+gem 'whenever', :require => false
+gem 'paperclip', git: 'git://github.com/thoughtbot/paperclip.git'
+gem 'shoryuken'
+gem 'nested_form_fields' # ネストフォームの動的生成
+
+group :development, :test do
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug'
+  gem 'pry-rails'
+  gem 'pry-byebug'
+  gem 'pry-stack_explorer'
+  gem 'hirb'
+  gem 'hirb-unicode'
+  gem 'quiet_assets'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+end
+
+group :development do
+  # Access an IRB console on exception pages or by using <%= console %> in views
+  gem 'web-console', '~> 2.0'
+
+  gem 'capistrano', '~> 3.4'
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-secrets-yml', '~> 1.0.0'
+  gem 'capistrano-shoryuken'
+  gem 'slackistrano'
+end
