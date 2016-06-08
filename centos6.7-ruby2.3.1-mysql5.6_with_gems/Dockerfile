@@ -7,7 +7,7 @@ ENV MYSQL_RPM_VERSION mysql-community-release-el6-5.noarch.rpm
 RUN yum -y update
 RUN yum install -y git gcc gcc-c++ make tar wget openssl-devel readline-devel sqlite-devel zlib zlib-devel file | true
 RUN yum install -y libcurl-devel libyaml-devel libffi-devel bzip2 autoconf automake libtool bison libxml2-devel libxslt-devel | true
-RUN yum install -y fontconfig freetype
+RUN yum install -y fontconfig freetype | true
 
 # Install rbenv and ruby-build
 RUN git clone https://github.com/sstephenson/rbenv.git /root/.rbenv
@@ -33,8 +33,8 @@ ADD ./Gemfile.lock Gemfile.lock
 RUN rbenv exec bundle install
 
 # Install mysql
-RUN yum install -y http://repo.mysql.com/$MYSQL_RPM_VERSION
-RUN yum install -y mysql-community-server mysql-community-devel
+RUN yum install -y http://repo.mysql.com/$MYSQL_RPM_VERSION | true
+RUN yum install -y mysql-community-server mysql-community-devel | true
 
 ENV MYSQL_ROOT_PASSWORD 'password'
 COPY docker-entrypoint.sh /entrypoint.sh
