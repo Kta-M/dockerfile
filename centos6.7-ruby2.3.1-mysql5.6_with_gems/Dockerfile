@@ -1,6 +1,6 @@
 FROM centos:6.7
 
-ENV RUBY_VERSION 2.3.0
+ENV RUBY_VERSION 2.3.1
 ENV MYSQL_RPM_VERSION mysql-community-release-el6-5.noarch.rpm
 
 # Install packages for building ruby
@@ -26,6 +26,12 @@ RUN rbenv global $RUBY_VERSION
 RUN echo 'gem: --no-rdoc --no-ri' >> /.gemrc
 RUN rbenv exec gem install bundler
 
+# Install gems
+WORKDIR /tmp
+ADD ./Gemfile Gemfile
+ADD ./Gemfile.lock Gemfile.lock
+RUN rbenv exec bundle install
+
 # Install mysql
 RUN yum install -y http://repo.mysql.com/$MYSQL_RPM_VERSION
 RUN yum install -y mysql-community-server mysql-community-devel
@@ -38,7 +44,7 @@ EXPOSE 3306
 
 RUN . /entrypoint.sh mysqld --datadir=/var/lib/mysql --user=mysql
 
-RUN rbenv exec gem install mysql2 -v 0.4.2
+RUN rbenv exec gem install mysql2 -v 0.4.3
 
 # Install packages for poltergeist
 RUN cd /usr/local/src/ && wget https://phantomjs.googlecode.com/files/phantomjs-1.9.2-linux-x86_64.tar.bz2
