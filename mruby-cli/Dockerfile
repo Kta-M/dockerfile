@@ -46,6 +46,7 @@ RUN git clone https://github.com/rbenv/ruby-build.git /root/.rbenv/plugins/ruby-
 RUN ./root/.rbenv/plugins/ruby-build/install.sh
 ENV PATH /root/.rbenv/bin:$PATH
 RUN echo 'export PATH=/root/.rbenv/bin:$PATH' >> /root/.bashrc
+RUN eval "$(rbenv init -)"
 RUN echo 'eval "$(rbenv init -)"' >> /root/.bashrc
 
 # Install ruby
