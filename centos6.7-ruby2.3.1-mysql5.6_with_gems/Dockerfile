@@ -22,15 +22,11 @@ ENV CONFIGURE_OPTS --disable-install-doc
 RUN rbenv install $RUBY_VERSION
 RUN rbenv global $RUBY_VERSION
 
-# Install Bundler for ruby
-RUN echo 'gem: --no-rdoc --no-ri' >> /.gemrc
-RUN rbenv exec gem install bundler
-
-# Install gems
-WORKDIR /tmp
-ADD ./Gemfile Gemfile
-ADD ./Gemfile.lock Gemfile.lock
-RUN rbenv exec bundle install
+# Install node.js and bower
+RUN rpm -ivh http://ftp.iij.ad.jp/pub/linux/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm
+RUN yum -y install nodejs npm --enablerepo=epel
+RUN yum clean all
+RUN npm install -g bower
 
 # Install mysql
 RUN yum install -y http://repo.mysql.com/$MYSQL_RPM_VERSION
@@ -44,10 +40,18 @@ EXPOSE 3306
 
 RUN . /entrypoint.sh mysqld --datadir=/var/lib/mysql --user=mysql
 
-RUN rbenv exec gem install mysql2 -v 0.4.3
+# Install Bundler for ruby
+RUN echo 'gem: --no-rdoc --no-ri' >> /.gemrc
+RUN rbenv exec gem install bundler
+
+# Install gems
+WORKDIR /tmp
+ADD ./Gemfile Gemfile
+ADD ./Gemfile.lock Gemfile.lock
+RUN rbenv exec bundle install
 
 # Install packages for poltergeist
-RUN cd /usr/local/src/ && wget https://phantomjs.googlecode.com/files/phantomjs-1.9.2-linux-x86_64.tar.bz2
+RUN cd /usr/local/src/ && wget https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/phantomjs/phantomjs-1.9.2-linux-x86_64.tar.bz2
 RUN tar jxfv /usr/local/src/phantomjs-1.9.2-linux-x86_64.tar.bz2
 RUN cp phantomjs-1.9.2-linux-x86_64/bin/phantomjs /usr/bin/
 

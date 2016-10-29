@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/bmabey/database_cleaner.git
+  revision: f052d64d3be9351a98a99e932a59be528ccc561c
+  specs:
+    database_cleaner (1.5.3)
+
+GIT
   remote: git://github.com/thoughtbot/paperclip.git
   revision: 26a4f4fc11dffa3c292e0296966a1454bdc1d4e4
   specs:
@@ -114,11 +120,12 @@ GEM
       timers (>= 4.1.1)
     celluloid-pool (0.20.5)
       timers (>= 4.1.1)
-    celluloid-supervision (0.20.5)
+    celluloid-supervision (0.20.6)
       timers (>= 4.1.1)
     chronic (0.10.2)
     climate_control (0.0.3)
       activesupport (>= 3.0)
+    cliver (0.3.2)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.1)
@@ -135,8 +142,14 @@ GEM
     config (1.1.0)
       activesupport (>= 3.0)
       deep_merge (~> 1.0.1)
+    daemons (1.2.3)
     debug_inspector (0.0.2)
     deep_merge (1.0.1)
+    delayed_job (4.1.2)
+      activesupport (>= 3.0, < 5.1)
+    delayed_job_active_record (4.1.1)
+      activerecord (>= 3.0, < 5.1)
+      delayed_job (>= 3.0, < 5)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     devise (3.5.6)
@@ -166,6 +179,9 @@ GEM
       railties (>= 3.0.0)
     ffi (1.9.10)
     formatador (0.2.5)
+    gherkin (2.12.2)
+      multi_json (~> 1.3)
+    gimei (0.2.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     grape (0.15.0)
@@ -217,14 +233,12 @@ GEM
     jbuilder (2.4.1)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
-    jmespath (1.2.4)
-      json_pure (>= 1.8.1)
+    jmespath (1.3.1)
     jquery-rails (4.1.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.3)
-    json_pure (1.8.3)
     jwt (1.5.4)
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
@@ -251,6 +265,7 @@ GEM
       railties (>= 3.1)
     multi_json (1.11.2)
     multi_xml (0.5.5)
+    mysql2 (0.4.3)
     nenv (0.3.0)
     nested_form_fields (0.7.8)
       coffee-rails (>= 3.2.1)
@@ -269,6 +284,11 @@ GEM
       activerecord (~> 4.0)
     paranoia_uniqueness_validator (1.1.0)
       activerecord (>= 4.0.0)
+    poltergeist (1.9.0)
+      capybara (~> 2.1)
+      cliver (~> 0.3.1)
+      multi_json (~> 1.0)
+      websocket-driver (>= 0.2.0)
     polyamorous (1.3.0)
       activerecord (>= 3.0)
     pry (0.10.3)
@@ -374,7 +394,7 @@ GEM
       activerecord (>= 3.1, < 4.3)
       activesupport (>= 3.1, < 4.3)
     shellany (0.0.1)
-    shoryuken (2.0.6)
+    shoryuken (2.0.11)
       aws-sdk-core (~> 2)
       celluloid (~> 0.16)
     slackistrano (2.0.1)
@@ -399,6 +419,9 @@ GEM
     tilt (2.0.2)
     timers (4.1.1)
       hitimes
+    turnip (2.1.0)
+      gherkin (~> 2.5)
+      rspec (>= 3.0, < 4.0)
     twilio-ruby (4.11.1)
       builder (>= 2.1.2)
       jwt (~> 1.0)
@@ -424,6 +447,9 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
+    websocket-driver (0.6.4)
+      websocket-extensions (>= 0.1.0)
+    websocket-extensions (0.1.2)
     whenever (0.9.4)
       chronic (>= 0.6.3)
     xpath (2.0.0)
@@ -449,11 +475,15 @@ DEPENDENCIES
   capybara
   coffee-rails (~> 4.1.0)
   config
+  daemons
+  database_cleaner!
+  delayed_job_active_record
   devise
   draper (~> 1.3)
   era_ja
   exception_notification
   factory_girl_rails
+  gimei
   grape (~> 0.15.0)
   grape-entity (~> 0.5.0)
   grape-swagger
@@ -467,10 +497,12 @@ DEPENDENCIES
   jquery-rails
   kaminari
   momentjs-rails
+  mysql2 (>= 0.3.13, < 0.5)
   nested_form_fields
   paperclip!
   paranoia (~> 2.0)
   paranoia_uniqueness_validator (= 1.1.0)
+  poltergeist
   pry-byebug
   pry-rails
   pry-stack_explorer
@@ -487,6 +519,7 @@ DEPENDENCIES
   shoryuken
   slackistrano
   therubyracer
+  turnip
   twilio-ruby
   uglifier (>= 1.3.0)
   unicorn
@@ -495,4 +528,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.12.5
+   1.13.0
