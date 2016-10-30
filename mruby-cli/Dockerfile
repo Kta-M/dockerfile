@@ -1,8 +1,6 @@
-FROM centos:6.8
+FROM ubuntu-debootstrap:14.04
 
-# Install packages for building ruby
-RUN yum -y update
-RUN yum install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
   automake \
   bison \
   build-essential \
@@ -28,39 +26,35 @@ RUN yum install -y \
   llvm-dev \
   make \
   mingw-w64 \
-  openssl-devel \
   patch \
-  readline-devel \
   rpm \
   sed \
-  tar \
   uuid-dev \
   valac \
   wget \
-  xz-utils \
-  zlib-devel
+  xz-utils
 
-# Install rbenv and ruby-build
-RUN git clone https://github.com/rbenv/rbenv.git /root/.rbenv
-RUN git clone https://github.com/rbenv/ruby-build.git /root/.rbenv/plugins/ruby-build
-RUN ./root/.rbenv/plugins/ruby-build/install.sh
-ENV PATH /root/.rbenv/bin:$PATH
-RUN echo 'export PATH=/root/.rbenv/bin:$PATH' >> /root/.bashrc
-RUN eval "$(rbenv init -)"
-RUN echo 'eval "$(rbenv init -)"' >> /root/.bashrc
+# install ruby
+RUN mkdir -p /opt/ruby-2.2.2/ && \
+  curl -s https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar-14/ruby-2.2.2.tgz | tar xzC /opt/ruby-2.2.2/
+ENV PATH /opt/ruby-2.2.2/bin:$PATH
 
-# Install ruby
-ENV RUBY_VERSION 2.3.1
-ENV CONFIGURE_OPTS --disable-install-doc
-RUN rbenv install $RUBY_VERSION
-RUN rbenv global $RUBY_VERSION
+# install fpm to build packages (deb, rpm)
+RUN gem install fpm --no-document
 
-# Install Bundler for ruby
-RUN echo 'gem: --no-rdoc --no-ri' >> /.gemrc
-RUN rbenv exec gem install fpm
+# install osx cross compiling tools
+RUN cd /opt/ && \
+  git clone https://github.com/tpoechtrager/osxcross.git
+COPY MacOSX10.10.sdk.tar.bz2 /opt/osxcross/tarballs/
+RUN echo "\n" | bash /opt/osxcross/build.sh
+RUN rm /opt/osxcross/tarballs/*
+ENV PATH /opt/osxcross/target/bin:$PATH
+ENV SHELL /bin/bash
 
-# yum clean
-RUN yum clean all
+# install msitools
+RUN cd /tmp && wget https://launchpad.net/ubuntu/+archive/primary/+files/gcab_0.6.orig.tar.xz && tar -xf gcab_0.6.orig.tar.xz && cd gcab-0.6 && ./configure && make && make install
+
+RUN cd /tmp && wget https://launchpad.net/ubuntu/+archive/primary/+files/msitools_0.94.orig.tar.xz && tar -xf msitools_0.94.orig.tar.xz && cd msitools-0.94 && ./configure && make && make install
 
 ONBUILD WORKDIR /home/mruby/code
 ONBUILD ENV GEM_HOME /home/mruby/.gem/
